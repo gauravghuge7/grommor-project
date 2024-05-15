@@ -133,7 +133,9 @@ const verifyOtp = asyncHandler(async (req, res) => {
     
         mobileNumber = `+91${mobileNumber}`;
         
+        console.log(req.body);
         console.log(mobileNumber);
+        console.log(otp);
     
         const otpDoc = await Otp.findOne({ mobileNumber }).select("otp");
        
@@ -142,19 +144,33 @@ const verifyOtp = asyncHandler(async (req, res) => {
         const thisOtp = otpDoc.otp;
 
         console.log(thisOtp);
+        
+        const user = await User.findOne({ phoneNumber: mobileNumber });
        
-
-    
-        if (!otpDoc) {
+        if(!otp) {
             return res
             .status(400)
-            .json(new ApiResponse(400, "OTP not found for this mobile number"));
+            .json(new ApiResponse(400, "OTP expired for mobile number generated new otp"));
+        }
+
+    
+        if (!thisOtp) {
+            return res
+            .status(400)
+            .json(new ApiResponse(400, "OTP expired for mobile number generated new otp"));
         }
     
         if (thisOtp == otp) {
 
             
-            const token = otpDoc.createToken();
+           
+            const token = await user.generateToken();
+
+            if(!token) {
+                throw new ApiError(400, "Token not generated");
+            }
+
+            console.log(token);
 
             await otpDoc.deleteOne({otp});
 
@@ -172,9 +188,10 @@ const verifyOtp = asyncHandler(async (req, res) => {
 
     } 
     catch (error) {
-        console.log(error);
-        res.status(500);
-        res.json({
+        console.log("Error is => ", error.message)
+        return res
+        .status(500)
+        .json({
             status: "error",
             message: error.message,
         });
@@ -182,27 +199,38 @@ const verifyOtp = asyncHandler(async (req, res) => {
   });
 
 
-const getUser = asyncHandler(async (req, res) => {
+
+const getUserDashboard = asyncHandler(async (req, res) => {
 
     try {
         // read the token from the cookie
         
-       const {id} = req.user;
+       const {_id, acceptReferralCode, phoneNumber, ourReferralCode} = req.user;
 
-       // find token in the database by id
+
+       const referalData = await User.findOne({acceptReferralCode});
+
+
+       const user = await User.findOne({phoneNumber});
+
+       console.log(referalData);
+
        
-       const user = await User.findById(id);
-
-       if(!user) {
-           throw new ApiError(400, "User not found");
-       }
+      
 
 
 
         
         return res
         .status(200)
-        .json(new ApiResponse(200, "User fetched successfully", user))
+        .json(
+            {
+                success: true,
+                message: "User fetched successfully",
+                referalData,
+                user        
+            }
+        )
 
     }
 
@@ -218,5 +246,5 @@ const getUser = asyncHandler(async (req, res) => {
 export {
     registerUser,
     verifyOtp,
-    getUser
+    getUserDashboard
 }

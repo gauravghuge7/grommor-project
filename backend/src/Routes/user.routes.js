@@ -3,10 +3,9 @@ const userRouter = Router();
 
 // import methods from controllers
 
-import { registerUser, verifyOtp } from '../controllers/user.controller.js';
+import { getUserDashboard, registerUser, verifyOtp } from '../controllers/user.controller.js';
 
-// import {getHistory} from '../controllers/admin.controller.js';
-// import isLoggedIn from "../middleware/auth.middleware.js";
+import isLoggedIn from "../middleware/auth.middleware.js";
 
 // import { createPayment, paymentVerification } from "../controllers/payment.controller.js";
 
@@ -19,15 +18,15 @@ import { registerUser, verifyOtp } from '../controllers/user.controller.js';
 
 
 
-
+        // verify and login user routes
     userRouter.route('/register').post(upload.none(), registerUser);
     userRouter.route('/verify').post(upload.none(), verifyOtp);
 
-    // get info from user 
 
-    // userRouter.route('/dashboard').get(isLoggedIn, getUser);
+    
+    // get info from user dashboard info routes
+    userRouter.route('/dashboard').get(isLoggedIn, getUserDashboard);
 
-    // userRouter.route('/history').get(isLoggedIn, getHistory);
 
 
         // payment routes

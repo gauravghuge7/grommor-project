@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import JWT from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const Schema = mongoose.Schema;
 
@@ -35,7 +35,15 @@ const userSchema = new Schema({
         type: String,
         
         trim: true,
-    }
+    },
+    totalReferrals: {
+        type: Number,
+        type: Schema.Types.ObjectId,
+        ref: 'Referral',
+        default: 0,
+        min: 0,
+        max: 100,
+    },
 
     
 
@@ -50,9 +58,13 @@ userSchema.methods = {
     
     generateToken: async function () {
 
-        return await JWT.sign(
+        return await jwt.sign(
 
-            {id: this._id, mobile: this.mobile, ourReferralCode: this.ourReferralCode},
+            {   
+                id: this._id, phoneNumber: this.phoneNumber, 
+                ourReferralCode: this.ourReferralCode,
+                acceptReferralCode: this.acceptReferralCode
+            },
             process.env.JWT_SECRET,
 
             {

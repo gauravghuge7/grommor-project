@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> 33809ee342f8de23eeceff8925a8e021dfb351dc
 import { useState } from "react";
 import Navbar from '../Navbar/Navbar.jsx';
 

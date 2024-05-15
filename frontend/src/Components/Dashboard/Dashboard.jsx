@@ -1,16 +1,10 @@
-<<<<<<< HEAD
 
 import './Dashboard.css';
 import Navbar from '../Navbar/Navbar';
+import axios from 'axios';
 
 import { useState } from "react";
 import Payment from '../../Razorpay/Payment';
-=======
-import './Dashboard.css';
-import Navbar from '../Navbar/Navbar.jsx';
-import Payment from '../../Razorpay/Payment.jsx';
-import React, { useState } from "react";
->>>>>>> 33809ee342f8de23eeceff8925a8e021dfb351dc
 
 const user = {
   name: "Tom Cook",
@@ -18,6 +12,18 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
+
+const getUserDashboard = async(event) => {
+
+  event.preventDefault();
+
+
+  const response = await axios.get('http://localhost:5000/user/dashboard');
+
+  console.log(response);
+
+}
+
 console.log(user);
 export default function Dashboard() {
   // State to track the current mode
@@ -27,13 +33,9 @@ export default function Dashboard() {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 33809ee342f8de23eeceff8925a8e021dfb351dc
 
   return (
-    <>
+    <div>
       <Navbar />
       <div
         className={`container mx-auto h-screen  px-4 py-8 ${
@@ -154,20 +156,9 @@ export default function Dashboard() {
             
           </div>
         </div>
-<<<<<<< HEAD
-=======
-
-        <footer>
-            <Payment />
-        </footer>
->>>>>>> 33809ee342f8de23eeceff8925a8e021dfb351dc
       </div>
 
       <Payment />
-    </>
-<<<<<<< HEAD
+    </div>
   );
-=======
-  )
->>>>>>> 33809ee342f8de23eeceff8925a8e021dfb351dc
 }

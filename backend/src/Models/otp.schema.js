@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import JWT from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 
 const otpSchema = new mongoose.Schema({
@@ -19,23 +19,26 @@ const otpSchema = new mongoose.Schema({
 });
 
 
-otpSchema.methods = {
+// otpSchema.methods = {
 
     
-    createToken: async function () {
+//     createToken: async function () {
 
-        return await JWT.sign(
+//         return await jwt.sign(
 
-            {id: this._id, mobile: this.mobile, ourReferralCode: this.ourReferralCode},
-            process.env.JWT_SECRET,
+//             {   id: this._id, mobile: this.mobile, 
+//                 ourReferralCode: this.ourReferralCode,
+//                 acceptReferralCode: this.acceptReferralCode
+//             },
+//             process.env.JWT_SECRET,
 
-            {
-                expiresIn: "1d",
-            }
-        )
-    }
+//             {
+//                 expiresIn: "1d",
+//             }
+//         )
+//     }
 
 
-}
+// }
 
 export const Otp = mongoose.model('Otp', otpSchema);

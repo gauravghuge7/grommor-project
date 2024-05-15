@@ -27,36 +27,9 @@
 
 
 
-// const Verify = () => {
-//     const [otp, setOtp] = useState('')
-        
-//     const handleVerifyOtp = async(e, {phoneNumber}) => {
-
-//         e.preventDefault();
-
-//         const config = {
-//             "headers" : {
-//                 "Content-Type":"application/json"
-//             }
-//         }
-
-//         const body = JSON.stringify({
-//             phoneNumber,
-//             userOtp: otp
-//         })
-
-//         const response = await axios.post('http://localhost:5000/verify', body, config)
-//         console.log(response)
-
-//         console.log(response.data)
-//         console.log(response.data.message)
-
-      
-
-
-
-
-//     }
+// const Verify = ({handleVerifyOtp}) => {
+   
+    
 
 //     return (
 //         <>
@@ -79,7 +52,7 @@
 
 // function Otp() {
 //     const [phoneNumber, setPhoneNumber] = useState('')
-
+//     const [otp, setOtp] = useState('')
 
 //     const handleSubmit = async (e) => {
 //         e.preventDefault();
@@ -104,29 +77,46 @@
 
 
 
+//             console.log(phoneNumber)
             
 
-//             // if(response.data.success) {
-//             //     console.log('otp sent successfully')
-//             //     toast.success('OTP sent successfully')
-//             // }   
-//             // else {
-//             //     console.log('invalid phone number to send otp')
-//             //     toast.error('Invalid phone number to send OTP')
-//             // }
+        
 
 //         } catch(error){
 //           console.log(error)
 //         }
 //       }
 
+          
+//     const handleVerifyOtp = async(e, {phoneNumber, otp}) => {
+
+//         e.preventDefault();
+
+//         const config = {
+//             "headers" : {
+//                 "Content-Type":"application/json"
+//             }
+//         }
+
+//         const body = JSON.stringify({
+//             phoneNumber,
+//             userOtp: otp
+//         })
+
+//         const response = await axios.post('http://localhost:5000/verify', body, config)
+//         console.log(response)
+
+//         console.log(response.data)
+//         console.log(response.data.message)
+
+//     }
 
 //     return (
 //         <div>
             
 //                 <Routes>
 
-//                     <Route path="/verify" element={<Verify phoneNumber={phoneNumber}  />} />
+//                     <Route path="/verify" element={<Verify phoneNumber={phoneNumber} handleVerifyOtp={handleVerifyOtp}  />} />
 
 //                     <Route path="/sendotp" element={<Home setPhoneNumber={setPhoneNumber} handleSendOtp={handleSubmit} />} />
                     
